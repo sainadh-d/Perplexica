@@ -506,7 +506,7 @@ const SettingsDialog = ({
                   </p>
                   <button
                     onClick={handleSubmit}
-                    className="bg-[#24A0ED] flex flex-row items-center space-x-2 text-white disabled:text-white/50 hover:bg-opacity-85 transition duration-100 disabled:bg-[#ececec21] rounded-full px-4 py-2"
+                    className="bg-[#21808D] flex flex-row items-center space-x-2 text-white disabled:text-white/50 hover:bg-opacity-85 transition duration-100 disabled:bg-[#ececec21] rounded-full px-4 py-2"
                     disabled={isLoading || isUpdating}
                   >
                     {isUpdating ? (

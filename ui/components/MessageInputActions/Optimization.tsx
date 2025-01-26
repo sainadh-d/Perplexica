@@ -13,7 +13,7 @@ const OptimizationModes = [
     key: 'speed',
     title: 'Speed',
     description: 'Prioritize speed and get the quickest possible answer.',
-    icon: <Zap size={20} className="text-[#FF9800]" />,
+    icon: <Zap size={20} className="text-[#21808D]" />,
   },
   {
     key: 'balanced',
@@ -52,7 +52,7 @@ const Optimization = ({
             OptimizationModes.find((mode) => mode.key === optimizationMode)
               ?.icon
           }
-          <p className="text-xs font-medium">
+          <p className="text-sm font-medium">
             {
               OptimizationModes.find((mode) => mode.key === optimizationMode)
                 ?.title

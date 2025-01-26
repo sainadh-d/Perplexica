@@ -25,6 +25,7 @@ import formatChatHistoryAsString from '../utils/formatHistory';
 import eventEmitter from 'events';
 import { StreamEvent } from '@langchain/core/tracers/log_stream';
 import { IterableReadableStream } from '@langchain/core/utils/stream';
+import logger from '../utils/logger';
 
 export interface MetaSearchAgentType {
   searchAndAnswer: (
@@ -77,9 +78,13 @@ class MetaSearchAgent implements MetaSearchAgentType {
         });
 
         const links = await linksOutputParser.parse(input);
+        console.time('questionParser')
         let question = this.config.summarizer
           ? await questionOutputParser.parse(input)
           : input;
+        
+        console.timeEnd('questionParser')
+        logger.info(`Question: ${question}`)
 
         if (question === 'not_needed') {
           return { query: '', docs: [] };
@@ -126,6 +131,9 @@ class MetaSearchAgent implements MetaSearchAgentType {
             }
           });
 
+          console.log(docGroups.length);
+
+          console.time("webSearchSummarizer");
           await Promise.all(
             docGroups.map(async (doc) => {
               const res = await llm.invoke(`
@@ -200,14 +208,18 @@ class MetaSearchAgent implements MetaSearchAgentType {
               docs.push(document);
             }),
           );
+          console.timeEnd("webSearchSummarizer");
 
           return { query: question, docs: docs };
         } else {
+          console.time("searxng");
           const res = await searchSearxng(question, {
             language: 'en',
             engines: this.config.activeEngines,
           });
+          console.timeEnd("searxng");
 
+          console.time("searchResultMapper");
           const documents = res.results.map(
             (result) =>
               new Document({
@@ -223,6 +235,7 @@ class MetaSearchAgent implements MetaSearchAgentType {
                 },
               }),
           );
+          console.timeEnd("searchResultMapper");
 
           return { query: question, docs: documents };
         }
@@ -246,6 +259,9 @@ class MetaSearchAgent implements MetaSearchAgentType {
             input.chat_history,
           );
 
+          logger.info(`Processed ${processedHistory}`)
+          console.time("webSearch");
+
           let docs: Document[] | null = null;
           let query = input.query;
 
@@ -261,7 +277,12 @@ class MetaSearchAgent implements MetaSearchAgentType {
             query = searchRetrieverResult.query;
             docs = searchRetrieverResult.docs;
           }
+          console.timeEnd("webSearch");
 
+          console.time('rerank');
+          if (docs) {
+            logger.info(`Docs Len: ${docs.length}`)
+          }
           const sortedDocs = await this.rerankDocs(
             query,
             docs ?? [],
@@ -269,6 +290,7 @@ class MetaSearchAgent implements MetaSearchAgentType {
             embeddings,
             optimizationMode,
           );
+          console.timeEnd('rerank');
 
           return sortedDocs;
         })

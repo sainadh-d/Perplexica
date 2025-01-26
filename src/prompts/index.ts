@@ -3,6 +3,9 @@ import {
   academicSearchRetrieverPrompt,
 } from './academicSearch';
 import {
+  reasonerPrompt
+} from './reasoner';
+import {
   redditSearchResponsePrompt,
   redditSearchRetrieverPrompt,
 } from './redditSearch';
@@ -20,6 +23,7 @@ import {
 export default {
   webSearchResponsePrompt,
   webSearchRetrieverPrompt,
+  reasonerPrompt,
   academicSearchResponsePrompt,
   academicSearchRetrieverPrompt,
   redditSearchResponsePrompt,

@@ -38,6 +38,15 @@ export const searchHandlers = {
     searchWeb: true,
     summarizer: true,
   }),
+  reasoner: new MetaSearchAgent({
+    activeEngines: [],
+    queryGeneratorPrompt: '',
+    responsePrompt: prompts.reasonerPrompt,
+    rerank: true,
+    rerankThreshold: 0.3,
+    searchWeb: false,
+    summarizer: false,
+  }),
   academicSearch: new MetaSearchAgent({
     activeEngines: ['arxiv', 'google scholar', 'pubmed'],
     queryGeneratorPrompt: prompts.academicSearchRetrieverPrompt,
@@ -190,6 +199,7 @@ export const handleMessage = async (
 
       if (handler) {
         try {
+          console.time('Total')
           const emitter = await handler.searchAndAnswer(
             parsedMessage.content,
             history,
@@ -199,8 +209,11 @@ export const handleMessage = async (
             parsedWSMessage.files,
           );
 
+          console.time('EmitterEventHandle')
           handleEmitterEvents(emitter, ws, aiMessageId, parsedMessage.chatId);
+          console.timeEnd('EmitterEventHandle')
 
+          console.time('dbStuff')
           const chat = await db.query.chats.findFirst({
             where: eq(chats.id, parsedMessage.chatId),
           });
@@ -246,6 +259,8 @@ export const handleMessage = async (
               )
               .execute();
           }
+          console.timeEnd('dbStuff')
+          console.timeEnd('Total')
         } catch (err) {
           console.log(err);
         }

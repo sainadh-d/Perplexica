@@ -86,7 +86,7 @@ const Page = () => {
             >
               <Link
                 href={`/c/${chat.id}`}
-                className="text-black dark:text-white lg:text-xl font-medium truncate transition duration-200 hover:text-[#24A0ED] dark:hover:text-[#24A0ED] cursor-pointer"
+                className="text-black dark:text-white lg:text-xl font-medium truncate transition duration-200 hover:text-[#21808D] dark:hover:text-[#21808D] cursor-pointer"
               >
                 {chat.title}
               </Link>

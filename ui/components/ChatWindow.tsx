@@ -408,7 +408,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
   const [files, setFiles] = useState<File[]>([]);
   const [fileIds, setFileIds] = useState<string[]>([]);
 
-  const [focusMode, setFocusMode] = useState('webSearch');
+  const [focusMode, setFocusMode] = useState('writingAssistant');
   const [optimizationMode, setOptimizationMode] = useState('speed');
 
   const [isMessagesLoaded, setIsMessagesLoaded] = useState(false);
@@ -534,7 +534,9 @@ const ChatWindow = ({ id }: { id?: string }) => {
           ]);
           added = true;
         }
-        setMessageAppeared(true);
+        if (sources?.length && sources.length > 0) {
+          setMessageAppeared(true);
+        }
       }
 
       if (data.type === 'message') {

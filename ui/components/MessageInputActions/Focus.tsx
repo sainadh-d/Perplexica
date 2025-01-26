@@ -24,6 +24,12 @@ const focusModes = [
     icon: <Globe size={20} />,
   },
   {
+    key: 'reasoner',
+    title: 'Reasoner',
+    description: 'Provides Reasoning',
+    icon: <Globe size={20} />,
+  },
+  {
     key: 'academicSearch',
     title: 'Academic',
     description: 'Search in published academic papers',
@@ -83,7 +89,7 @@ const Focus = ({
         {focusMode !== 'webSearch' ? (
           <div className="flex flex-row items-center space-x-1">
             {focusModes.find((mode) => mode.key === focusMode)?.icon}
-            <p className="text-xs font-medium hidden lg:block">
+            <p className="text-sm font-medium hidden lg:block">
               {focusModes.find((mode) => mode.key === focusMode)?.title}
             </p>
             <ChevronDown size={20} className="-translate-x-1" />
@@ -91,7 +97,7 @@ const Focus = ({
         ) : (
           <div className="flex flex-row items-center space-x-1">
             <ScanEye size={20} />
-            <p className="text-xs font-medium hidden lg:block">Focus</p>
+            <p className="text-sm font-medium hidden lg:block">Focus</p>
           </div>
         )}
       </PopoverButton>
@@ -121,7 +127,7 @@ const Focus = ({
                   className={cn(
                     'flex flex-row items-center space-x-1',
                     focusMode === mode.key
-                      ? 'text-[#24A0ED]'
+                      ? 'text-[#21808D]'
                       : 'text-black dark:text-white',
                   )}
                 >

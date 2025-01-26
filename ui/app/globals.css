@@ -1,3 +1,5 @@
+@import url('fonts.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,4 +12,84 @@
   .overflow-hidden-scrollable::-webkit-scrollbar {
     display: none;
   }
+}
+
+::selection {
+  /* background-color:  rgb(32 184 205) !important; */
+  background-color: #8ebec3 !important;
+}
+
+body {
+  font-family: 'Grotesk Neue' !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.65;
+  }
+}
+
+@keyframes expand {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-pulse-expand {
+  animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite, expand 0.5s !important;
+}
+
+/* pre:has(> code) {
+  background-color: #f3f3ee !important;
+  padding-left: 10px !important;
+} */
+
+pre > code {
+  font-family: 'Berkeley Mono' !important;
+  /* color: rgb(77, 77, 76) !important; */
+  font-size: 0.9rem !important;
+  background-color: rgb(243 243 238) !important;
+}
+
+.prose {
+  /* color: #13343b !important; */
+  /* font-size: 1.1rem !important; */
+}
+
+.prose strong {
+  font-weight: 400 !important;
+}
+
+/* .prose h2 {
+  font-size: 1.125rem !important;
+  line-height: 1.75rem !important;
+} */
+
+li::marker {
+  color: #686263 !important;
+}
+
+th, td {
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}
+
+@media (prefers-color-scheme: light) {
+  table {
+    background-color: #f3f3ee;
+    border-radius: 2% !important;
+  }
+}
+
+.inst-sans, h2, h3, th {
+  /* font-family: 'Instrument Sans', serif !important; */
+  font-family: 'Grotesk' !important;
+}
+
+.berkeley {
+    font-family: 'Berkeley Mono' !important;
 }

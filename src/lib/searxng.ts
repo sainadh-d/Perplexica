@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getSearxngApiEndpoint } from '../config';
+import logger from '../utils/logger';
 
 interface SearxngSearchOptions {
   categories?: string[];
@@ -27,6 +28,9 @@ export const searchSearxng = async (
 
   const url = new URL(`${searxngURL}/search?format=json`);
   url.searchParams.append('q', query);
+
+  logger.info(`query: ${query}`)
+  logger.info(`url: ${url}`);
 
   if (opts) {
     Object.keys(opts).forEach((key) => {
